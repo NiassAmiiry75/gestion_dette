@@ -1,4 +1,14 @@
+import { useNavigate } from "react-router-dom"
+import { authService } from "../../../../services/AuthService"
+import { useAuth } from "../../../../utils/AuthProvider"
+
 export default function HeaderSecure(){
+  const navigate =useNavigate()
+  // const authProvider =useAuth()
+  const authProvider=useAuth()
+  const handleClick=()=>{
+    authService.logout()
+    navigate('/')
     return(
       <header className="flex flex-col sm:flex-row justify-between items-center 
       bg-white shadow-md px-4 py-2 header">
@@ -20,8 +30,14 @@ export default function HeaderSecure(){
           <img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2" alt="photoUtilisateur"
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-blue-500"/>
              <div className="pl-2 sm:pl-4 py-1 ml-2">
-              <p className="text-gray-700 text-xs sm:text-sm font-semibold">Mouhamed R.B.B</p>
-              <p className="text-gray-700 text-xs sm:text-sm font-semibold">Wane</p>
+              <p className="text-gray-700 text-xs sm:text-sm font-semibold">
+              <button type="button" onClick={handleClick}
+           className="block px-4 py-2 text-sm text-center text-gray-700 hover:bg-gray100">DECONNEXION</button> 
+                Mouhamed R.B.B</p>
+              <p className="text-gray-700 text-xs sm:text-sm font-semibold">
+                {/* Wane */}
+                {authProvider.user?.role}
+                </p>
              </div>
         </button>
         <div data-popover id="popover-bottom" role="tooltip" className="absolute rigth-2 mt-2 w-48 bg-white rounded-md shadow-lg py-1 
@@ -47,4 +63,5 @@ export default function HeaderSecure(){
           </div>
       </header>
     )
+}
 }

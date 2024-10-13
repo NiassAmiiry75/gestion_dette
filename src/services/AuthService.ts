@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import apiClient from "./api-client";
+import apiClient, { RestResponse } from "./api-client";
 
 interface Credentials {
     login:string,
@@ -7,7 +7,7 @@ interface Credentials {
 }
 export type CredentialsOrNull = Credentials | null;
 const login = (credentials: CredentialsOrNull)=>{
-    return apiClient.post('/auth/login',credentials)
+    return apiClient.post<RestResponse<{token:string}>>('/auth/login',credentials)
 }
 // suppression du token du lacalStorage
 const logout =()=>{
